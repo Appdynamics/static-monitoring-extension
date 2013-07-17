@@ -70,7 +70,7 @@ XML files:
     once per minute.
     
 
-![](images/emoticons/information.gif) Main Java File: **src/com/appdynamics/monitors/flagmonitor/FlagMonitor.java**  -> This file contains the metric parsing and printing.
+**Note**: Main Java File: **src/com/appdynamics/monitors/flagmonitor/FlagMonitor.java**  -> This file contains the metric parsing and printing.
 
 
 ##XML Examples
