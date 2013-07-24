@@ -1,0 +1,29 @@
+<monitor>
+        <name>StaticMonitor</name>
+        <type>managed</type>
+        <description>Static monitor. Reports metrics in metrics.xml to controller once per minute</description>
+        <monitor-configuration></monitor-configuration>
+        <monitor-run-task>
+                <execution-style>continuous</execution-style>
+                <name>Static Monitor Run Task</name>
+                <display-name>Static Monitor Task</display-name>
+                <description>Static Monitor Task</description>
+                <type>java</type>
+                <java-task>
+                        <classpath>StaticMonitor.jar;lib/dom4j/dom4j-2.0.0-ALPHA-2.jar</classpath>
+                        <impl-class>main.java.com.appdynamics.monitors.staticmonitor.StaticMonitor</impl-class>
+                </java-task>
+              
+                <task-arguments>  
+                        <argument name="static-values-path" is-required="true" default-value="monitors/StaticMonitor/metrics.xml"/>
+                        
+                         <!-- CONFIGURE METRIC REPORT PATH (OPTIONAL):
+                     		You can configure a metric path, such that only one tier is going to receive
+                     		metrics from this monitor. The pattern is: Server|Component:<id or name>|<custom name (optional)>
+                     		Default (if default-value="") is "Custom Metrics|Static Monitor" under 
+                     		Application Infrastructure Performance in every tier
+                		-->
+                        <argument name="metric-path" is-required="false" default-value=""/>
+                </task-arguments>
+        </monitor-run-task>
+</monitor>

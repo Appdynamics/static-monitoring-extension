@@ -1,0 +1,10 @@
+<flag-monitor>
+	<!-- You can have more than one metric if you wish! -->		
+	<metric>
+		<!-- Enter the name of your metric -->
+		<metric-name></metric-name>
+		
+		<!-- Enter an integer. This value is reported to the controller once per minute (default is 0) -->
+		<metric-value></metric-value>
+	</metric>
+</flag-monitor>

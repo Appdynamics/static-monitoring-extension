@@ -1,0 +1,37 @@
+<project default="build">
+    <property name="build.dir" value="dist" />
+    <property name="conf.dir" value="conf" />
+    <property name="project.name" value="StaticMonitor"/>
+    <property name="lib.dir" value="lib"/>
+    <path id="cp">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+    <target name="build">
+        <mkdir dir="${build.dir}/classes"/>
+        <javac destdir="${build.dir}/classes" srcdir="src" classpathref="cp" debug="on"/>
+        <mkdir dir="${build.dir}/StaticMonitor"/>
+        <mkdir dir="${build.dir}/StaticMonitor/lib"/>
+        <jar destfile="${build.dir}/StaticMonitor/${project.name}.jar">
+            <fileset dir="${build.dir}/classes"/>
+        </jar>
+    	<copy todir="${build.dir}/StaticMonitor/lib/">
+    	            <fileset dir="${lib.dir}" includes="**/*"/>
+    	</copy>
+        <copy todir="${build.dir}/StaticMonitor">
+            <fileset dir="${conf.dir}" includes="monitor.xml"/>
+        </copy>
+    	<copy todir="${build.dir}/StaticMonitor">
+    	            <fileset dir="${conf.dir}" includes="metrics.xml"/>
+    	</copy>
+        <delete dir="${build.dir}/classes"/>
+    </target>
+    <target name="package" depends="build">
+        <zip destfile="${build.dir}/StaticMonitor.zip">
+            <zipfileset dir="${build.dir}" filemode="755"/>
+        </zip>
+        <delete dir="${build.dir}/StaticMonitor"/>
+    </target>
+    <target name="clean">
+        <delete dir="${build.dir}/"/>
+    </target>
+</project>
