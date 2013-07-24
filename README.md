@@ -1,4 +1,4 @@
-# AppDynamics Flag Monitoring Extension
+# AppDynamics Static Monitoring Extension
 
 ##Use Case
 
@@ -6,7 +6,7 @@ Once per minute, this monitoring extension reads metrics from the metrics.xml fi
 
 For example, you can create a metric named "maintenance mode" and put a value of 0 if the node (where the corresponding Machine Agent is installed) is not in maintenance mode, and a value of 1 if it is in maintenance mode.
 
-At any time you can make manual (or automated) updates -- such as changes in the value or name of a metric -- to the metrics.xml file. It will take up to one minute for the Flag monitoring extension to report these updates to the Controller.
+At any time you can make manual (or automated) updates -- such as changes in the value or name of a metric -- to the metrics.xml file. It will take up to one minute for the Static Monitoring Extension to report these updates to the Controller.
 
 This extension also gives you the opportunity to create policy alerting based on AND or OR clauses.
 
@@ -15,14 +15,16 @@ For example, if the traffic of a node falls below a certain threshold AND this n
 
 ##Installation
 
-1. In the \<machine-agent-home\>/monitors/ directory, create a new folder for the Flag monitor extension. (Suggested folder name is FlagMonitor.)
-2. Copy the contents in the 'dist' folder to the folder created in step 1.
-3. If the directory you created in step 1 is not named FlagMonitor, open monitor.xml and configure the path to the metrics.xml file.
-4. Edit metrics.xml and enter data for at least one metric.
-3. Restart the Machine Agent.
-4. Look for the metrics in the AppDynamics Metric Browser at: Application Infrastructure
-    Performance | \<Tier\> | Custom Metrics | Flag Monitor | \<Metric
-    name\>
+1. Run 'ant package' from the static-monitoring-extension directory
+2. Deploy the file StaticMonitor.zip located in the 'dist' directory into \<machineagent install dir\>/monitors/
+3. Unzip the deployed file
+4. In \<machineagent install dir\>/monitors/StaticMonitor/ open metrics.xml and enter data for at least one metric.
+5. Optional but recommended. Open monitor.xml and configure a custom metric path (see monitor.xml for instructions)
+6. Restart the Machine Agent.
+
+Look for the metrics in the AppDynamics Metric Browser at: Application Infrastructure
+    Performance | \<Tier\> | Custom Metrics | Static Monitor | \<Metric
+    name\> or at: Application Infrastructure Performance | \<Tier\> | \<your configured name (optional)\>
 
 
 ##Directory Structure
@@ -31,10 +33,6 @@ For example, if the traffic of a node falls below a certain threshold AND this n
 <tr>
 <th align="left"> Directory/File </th>
 <th align="left"> Description </th>
-</tr>
-<tr>
-<td align="left"> bin </td>
-<td align="left"> Contains class files </td>
 </tr>
 <tr>
 <td align="left"> conf </td>
@@ -46,12 +44,11 @@ For example, if the traffic of a node falls below a certain threshold AND this n
 </tr>
 <tr>
 <td align="left"> src </td>
-<td align="left"> Contains source code to the Flag monitoring extension </td>
+<td align="left"> Contains source code to the Static monitoring extension </td>
 </tr>
 <tr>
 <td align="left"> dist </td>
-<td align="left"> Contains the distribution package (monitor.xml, metrics.xml, the lib
-directory, and flagmonitor.jar) </td>
+<td align="left"> Only obtained when using ant. Run 'ant build' to get binaries. Run 'ant package' to get the distributable .zip file </td>
 </tr>
 <tr>
 <td align="left"> build.xml </td>
@@ -70,46 +67,10 @@ XML files:
     once per minute.
     
 
-**Note**: Main Java File: **src/com/appdynamics/monitors/flagmonitor/FlagMonitor.java**  -> This file contains the metric parsing and printing.
+**Note**: Main Java File: **src/main/java/com/appdynamics/monitors/staticmonitor/StaticMonitor.java**  -> This file contains the metric parsing and printing.
 
 
-##XML Examples
-
-###monitor.xml
-
-|**Parameter** | **Description**|
-| ------------- |:-------------|
-| metrics-path|Location of the metrics.xml file |
-
-
-~~~~
-
-<monitor>
-        <name>FlagMonitor</name>
-        <type>managed</type>
-        <description>Flag monitor. Reports metrics in metrics.xml to controller once per minute</description>
-        <monitor-configuration></monitor-configuration>
-        <monitor-run-task>
-                <execution-style>continuous</execution-style>
-                <name>Flag Monitor Run Task</name>
-                <display-name>Flag Monitor Task</display-name>
-                <description>Flag Monitor Task</description>
-                <type>java</type>
-                <java-task>
-                        <classpath>flagmonitor.jar;lib/dom4j-2.0.0-ALPHA-2.jar</classpath>
-                        <impl-class>com.appdynamics.monitors.flagmonitor.FlagMonitor</impl-class>
-                </java-task>
-                <!-- CONFIGURE IF NECESSARY:
-                    this is the path to the file metrics.xml file. 
-                    If you created a directory in 'monitors' named other than 'FlagMonitor', 
-                    change the field  'default-value' to the appropriate directory.
-                -->
-                <task-arguments>
-                        <argument name="metrics-path" is-required="true" default-value="monitors/FlagMonitor/metrics.xml"/>
-                </task-arguments>
-        </monitor-run-task>
-</monitor>
-~~~~
+##XML Example
 
 ###metrics.xml
 
@@ -124,11 +85,19 @@ XML files:
     <!-- You can have more than one metric if you wish -->
     <metric>
         <!-- Enter the name of your metric -->
-        <metric-name> </metric-name>
+        <metric-name>Machine ABC Maintenance Mode</metric-name>
 
         <!-- Enter an integer. This value is reported to the controller once 
              per minute (default is 0) -->
-        <metric-value> </metric-value>
+        <metric-value>1</metric-value>
+    </metric>
+    <metric>
+        <!-- Enter the name of your metric -->
+        <metric-name>Machine XYZ Maintenance Mode</metric-name>
+
+        <!-- Enter an integer. This value is reported to the controller once 
+             per minute (default is 0) -->
+        <metric-value>0</metric-value>
     </metric>
 </flag-monitor>
 ~~~~
