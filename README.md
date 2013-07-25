@@ -81,7 +81,7 @@ XML files:
 
 ~~~~
 
-<flag-monitor>
+<static-monitor>
     <!-- You can have more than one metric if you wish -->
     <metric>
         <!-- Enter the name of your metric -->
@@ -99,7 +99,7 @@ XML files:
              per minute (default is 0) -->
         <metric-value>0</metric-value>
     </metric>
-</flag-monitor>
+</static-monitor>
 ~~~~
 
 
