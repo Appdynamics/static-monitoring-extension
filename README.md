@@ -105,11 +105,11 @@ XML files:
 
 ##Contributing
 
-Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/flag-monitoring-extension).
+Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/static-monitoring-extension).
 
 ##Community
 
-Find out more in the [AppSphere](http://appsphere.appdynamics.com/t5/Extensions/Flag-Monitoring-Extension/idi-p/1103) community.
+Find out more in the [AppSphere](http://appsphere.appdynamics.com/t5/Extensions/Static-Monitoring-Extension/idi-p/1103) community.
 
 ##Support
 
