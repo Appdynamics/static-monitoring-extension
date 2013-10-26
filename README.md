@@ -1,5 +1,7 @@
 # AppDynamics Static Monitoring Extension
 
+This extension works only with the Java agent.
+
 ##Use Case
 
 Once per minute, this monitoring extension reads metrics from the metrics.xml file and reports them to the AppDynamics Controller.
