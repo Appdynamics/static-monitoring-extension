@@ -1,8 +1,18 @@
+<!--
+  ~   Copyright 2018. AppDynamics LLC and its affiliates.
+  ~   All Rights Reserved.
+  ~   This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+  ~   The copyright notice above does not evidence any actual or intended publication of such source code.
+  ~
+  -->
+
 <project default="build">
     <property name="build.dir" value="dist" />
     <property name="conf.dir" value="conf" />
     <property name="project.name" value="StaticMonitor"/>
     <property name="lib.dir" value="lib"/>
+    <property name="licenses" value="licenses"/>
+
     <path id="cp">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
@@ -19,6 +29,10 @@
     	</copy>
         <copy todir="${build.dir}/StaticMonitor">
             <fileset dir="${conf.dir}" includes="monitor.xml"/>
+            <fileset dir="${licenses}">
+                <include name="*.txt" />
+            </fileset>
+
         </copy>
     	<copy todir="${build.dir}/StaticMonitor">
     	            <fileset dir="${conf.dir}" includes="metrics.xml"/>
